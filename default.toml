@@ -5,13 +5,13 @@ name = "my-container-image"
 description = "A customized Fedora rpm-ostree Linux image for running containers"
 
 # Blueprint version
-version = "1.0"
+version = "1.0.0"
 
 # Modules to include in the image
 [[modules]]
-name = "containers"
-stream = "f34"
-version = "latest"
+name = "cri-o"			# Kubernetes Container Runtime Interface for OCI-based containers
+stream = "1.25"
+
 
 # Packages to include in the image
 [[packages]]
@@ -84,28 +84,14 @@ name = "selinux-policy-targeted"  # SELinux policy module
   permissions = "0755"
   [customizations.var.lib]
   permissions = "0755"
-
-  # Add a custom systemd service
-  [customizations.systemd.units]
-  [[customizations.systemd.units]]
-  name = "custom.service"
-  contents = '''
-    [Unit]
-    Description=Custom service
-
-    [Service]
-    Type=simple
-    ExecStart=/usr/bin/custom
-    Restart=always
-
-    [Install]
-    WantedBy=multi-user.target
-  '''
   
-  # Add a user with sudo privileges
-  [customizations.user]
-  name = "myuser"
-  groups = ["wheel"]
-  password_hash = "$6$salt$hashedpasswordhere"
+ # Add a user with sudo privileges
+  [[customizations.user]]
+   name = "ithinkthereforeiam"
+   description = "admin user"
+   groups = ["wheel"]
+   password = "$6$x3ly3hK1TlE4ilwU$Sf3zcJuB.Knk4K48olJjCqayWtuFMqZDRy0J5JFnxZMgD6hocQ/4FPU.n2nzYwP8xdh4e8lSyRQ3OtO0G88QD1"  
+   # Get a custom password hash using 
+   # python3 -c 'import crypt,getpass;pw=getpass.getpass();print(crypt.crypt(pw) if (pw==getpass.getpass("Confirm: ")) else exit())'
 
 
