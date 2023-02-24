@@ -1,0 +1,35 @@
+name = "myimage"
+description = "My custom Fedora image for running containers"
+version = "1.0.0"
+
+[[packages]]
+name = "nano"
+
+[[packages]]
+name = "podman"
+
+[[packages]]
+name = "buildah"
+
+[[packages]]
+name = "skopeo"
+
+[[packages]]
+name = "runc"
+
+[[packages]]
+name = "crun"
+
+[[packages]]
+name = neofetch
+
+[[packages]]
+name = neovim
+
+[[customizations.user]]
+ name = "root"
+ description = "root"
+ password = "$6$wkKZt0ioohq9DyVo$dSLd6kDAdHngQJC2nDz446rb0WfaRUMsId9LJZF9W6iPkDU1jeya.xop6f/D8HoGWM4a/45FoANayktg0pN420"
+ home = "/home/root/"
+ shell = "/usr/bin/bash"
+ groups = ["root"]
