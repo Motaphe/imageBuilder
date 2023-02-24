@@ -1,15 +1,18 @@
 name = "fedoraImage"
-description = "My custom Fedora image for running containers"
+description = "My custom Fedora image for day to day tasks"
 version = "1.0.0"
 
 [[packages]]
-name = neofetch
+name = "neofetch"
 
 [[packages]]
-name = neovim
+name = "neovim"
 
 [[packages]]
-name = git
+name = "git"
+
+[[packages]]
+name = "wget"
 
 [[customizations.user]]
  name = "root"
