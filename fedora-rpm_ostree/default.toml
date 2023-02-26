@@ -1,0 +1,97 @@
+# Blueprint name
+name = "my-container-image"
+
+# Blueprint description
+description = "A customized Fedora rpm-ostree Linux image for running containers"
+
+# Blueprint version
+version = "1.0.0"
+
+# Modules to include in the image
+[[modules]]
+name = "cri-o"			# Kubernetes Container Runtime Interface for OCI-based containers
+stream = "1.25"
+
+
+# Packages to include in the image
+[[packages]]
+name = "podman"                # container runtime
+[[packages]]
+name = "buildah"               # container image builder
+[[packages]]
+name = "skopeo"                # container image management
+[[packages]]
+name = "git"                   # version control system
+[[packages]]
+name = "wget"                  # network file downloader
+[[packages]]
+name = "curl"                  # command line tool for transferring data with URLs
+[[packages]]
+name = "vim"                   # text editor
+[[packages]]
+name = "nano"                  # text editor
+[[packages]]
+name = "jq"                    # command line JSON processor
+[[packages]]
+name = "httpie"                # command line HTTP client
+[[packages]]
+name = "openssl"               # cryptography toolkit
+[[packages]]
+name = "openssh-clients"       # SSH clients
+[[packages]]
+name = "openssh-server"        # SSH server
+[[packages]]
+name = "passwd"                # change user password
+[[packages]]
+name = "sudo"                  # privilege escalation tool
+[[packages]]
+name = "util-linux-user"       # utilities for user and group management
+[[packages]]
+name = "lsof"                  # lists open files
+[[packages]]
+name = "net-tools"             # network utilities
+[[packages]]
+name = "iputils"               # network testing utilities
+[[packages]]
+name = "bind-utils"            # DNS utilities
+[[packages]]
+name = "traceroute"            # trace network paths
+[[packages]]
+name = "telnet"                # user interface to the TELNET protocol
+[[packages]]
+name = "tcpdump"               # network traffic analyzer
+[[packages]]
+name = "mtr"                   # network diagnostic tool
+[[packages]]
+name = "iproute"               # network utility for configuring network interfaces, routing tables, and tunnels
+[[packages]]
+name = "iptables"              # firewall administration tool
+[[packages]]
+name = "firewalld"             # firewall management tool
+[[packages]]
+name = "selinux-policy-targeted"  # SELinux policy module
+
+# Customizations to apply to the image
+[customizations]
+  # Modify the sudoers configuration
+  [customizations.etc."sudoers.d"."99-custom-users"]
+  content = '%users ALL=(ALL) NOPASSWD:ALL'
+
+  # Set permissions for /var directories
+  [customizations.var.tmp]
+  permissions = "1777"
+  [customizations.var.log]
+  permissions = "0755"
+  [customizations.var.lib]
+  permissions = "0755"
+  
+ # Add a user with sudo privileges
+  [[customizations.user]]
+   name = "ithinkthereforeiam"
+   description = "admin user"
+   groups = ["wheel"]
+   password = "$6$x3ly3hK1TlE4ilwU$Sf3zcJuB.Knk4K48olJjCqayWtuFMqZDRy0J5JFnxZMgD6hocQ/4FPU.n2nzYwP8xdh4e8lSyRQ3OtO0G88QD1"  
+   # Get a custom password hash using 
+   # python3 -c 'import crypt,getpass;pw=getpass.getpass();print(crypt.crypt(pw) if (pw==getpass.getpass("Confirm: ")) else exit())'
+
+
